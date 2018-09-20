@@ -295,13 +295,17 @@ switch lower(keydata.Key)
         
     case 'd' % delete current transform or most recent probe point
         if ud.currentProbe
-            ud.pointList{ud.currentProbe,1} = ud.pointList{ud.currentProbe,1}(1:end-1,:);
-            ud.pointList{ud.currentProbe,2} = ud.pointList{ud.currentProbe,2}(1:end-1,:);
-            ud.pointList{ud.currentProbe,3} = ud.pointList{ud.currentProbe,3}(1:end-1,:);
-            set(ud.pointHands{ud.currentProbe, 1}(end), 'Visible', 'off'); 
-            ud.pointHands{ud.currentProbe, 1} = ud.pointHands{ud.currentProbe, 1}(1:end-1);
-            ud.pointHands{ud.currentProbe, 2} = ud.pointHands{ud.currentProbe, 2}(1:end-1);
-            disp('probe point deleted')
+            if numel(ud.pointList{1}) == 0
+                fprintf('Error: No point selected\n')
+            else
+                ud.pointList{ud.currentProbe,1} = ud.pointList{ud.currentProbe,1}(1:end-1,:);
+                ud.pointList{ud.currentProbe,2} = ud.pointList{ud.currentProbe,2}(1:end-1,:);
+                ud.pointList{ud.currentProbe,3} = ud.pointList{ud.currentProbe,3}(1:end-1,:);
+                set(ud.pointHands{ud.currentProbe, 1}(end), 'Visible', 'off'); 
+                ud.pointHands{ud.currentProbe, 1} = ud.pointHands{ud.currentProbe, 1}(1:end-1);
+                ud.pointHands{ud.currentProbe, 2} = ud.pointHands{ud.currentProbe, 2}(1:end-1);
+                disp('probe point deleted')
+            end
         end
         
     case 'c' % decrement slice
